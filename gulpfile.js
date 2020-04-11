@@ -8,7 +8,7 @@ const { buildPath, filesToWatch, filesToInject } = require("./gulpfile.config");
 function index(cb) {
   const target = src("./src/index.html");
   const sources = src(filesToInject, {
-    read: false
+    read: false,
   });
   return target
     .pipe(inject(sources, { ignorePath: "src" }))
@@ -28,13 +28,21 @@ function copyAppJs(cb) {
   return src("./src/**/app/**/*.js").pipe(dest(buildPath));
 }
 
+function copyAppImg(cb) {
+  return src("./src/**/image/**/*.png").pipe(dest(buildPath));
+}
+
 // CLEAN TASK
 function clean(cb) {
   return del([buildPath], { force: true });
 }
 
 // BUILD TASK
-const build = series(clean, parallel(copyVendorJs, copyAppJs, copyCss), index);
+const build = series(
+  clean,
+  parallel(copyVendorJs, copyAppJs, copyCss, copyAppImg),
+  index
+);
 
 // RELOAD
 function sync(cb) {
@@ -47,8 +55,8 @@ function serve(cb) {
   // Serve files from the root of this project
   browserSync.init({
     server: {
-      baseDir: buildPath
-    }
+      baseDir: buildPath,
+    },
   });
 
   watch(filesToWatch, { delay: 500 }, series(build, sync));

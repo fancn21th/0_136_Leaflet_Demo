@@ -17,19 +17,13 @@
       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
       crossorigin=""
     ></script>
-    <style>
-      #mapid {
-        height: 180px;
-      }
-    </style>
   </head>
   <body>
-    <div id="mapid"></div>
+    <div id="mapid" style="width: 600px; height: 400px;"></div>
     <script>
       var mymap = L.map("mapid").setView([51.505, -0.09], 13);
       var accessToken =
         "pk.eyJ1IjoiZmFuY24yMXRoIiwiYSI6ImNrOHJhZXh6cDBja3AzZW80enBmZmw5cG8ifQ.nXK16O-pBFoD12BcyS9uzQ";
-
       // tile layer
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -60,6 +54,19 @@
       marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
       circle.bindPopup("I am a circle.");
       polygon.bindPopup("I am a polygon.");
+      // standalone popup
+      var popup = L.popup()
+        .setLatLng([51.5, -0.09])
+        .setContent("I am a standalone popup.")
+        .openOn(mymap);
+      // events
+      function onMapClick(e) {
+        popup
+          .setLatLng(e.latlng)
+          .setContent("You clicked the map at " + e.latlng.toString())
+          .openOn(mymap);
+      }
+      mymap.on("click", onMapClick);
     </script>
   </body>
 </html>

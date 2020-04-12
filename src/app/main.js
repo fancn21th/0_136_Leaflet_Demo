@@ -1,4 +1,4 @@
-var map = L.map("mapid").setView([51.505, -0.09], 13);
+var map = L.map("mapid").setView([30.5928, 114.3055], 13);
 var accessToken =
   "pk.eyJ1IjoiZmFuY24yMXRoIiwiYSI6ImNrOHJhZXh6cDBja3AzZW80enBmZmw5cG8ifQ.nXK16O-pBFoD12BcyS9uzQ";
 // tile layer
@@ -14,28 +14,3 @@ L.tileLayer(
     accessToken: accessToken,
   }
 ).addTo(map);
-
-var LeafIcon = L.Icon.extend({
-  options: {
-    shadowUrl: "assets/image/leaf-shadow.png",
-    iconSize: [38, 95],
-    shadowSize: [50, 64],
-    iconAnchor: [22, 94],
-    shadowAnchor: [4, 62],
-    popupAnchor: [-3, -76],
-  },
-});
-
-var greenIcon = new LeafIcon({ iconUrl: "assets/image/leaf-green.png" }),
-  redIcon = new LeafIcon({ iconUrl: "assets/image/leaf-red.png" }),
-  orangeIcon = new LeafIcon({ iconUrl: "assets/image/leaf-orange.png" });
-
-L.marker([51.5, -0.09], { icon: greenIcon })
-  .addTo(map)
-  .bindPopup("I am a green leaf.");
-L.marker([51.495, -0.083], { icon: redIcon })
-  .addTo(map)
-  .bindPopup("I am a red leaf.");
-L.marker([51.49, -0.1], { icon: orangeIcon })
-  .addTo(map)
-  .bindPopup("I am an orange leaf.");

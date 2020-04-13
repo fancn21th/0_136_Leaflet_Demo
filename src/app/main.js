@@ -29,12 +29,12 @@ var data = [
 
 var map = L.map("map", {
   crs: L.CRS.Simple,
-  minZoom: -1,
 });
 
 /*
-  浦东长109.7米，宽147.3米
-  但是长的起点是 -18.9米
+  浦东
+  宽109.7米 宽的偏移是 18.9
+  高147.3米 高的偏移是 6.4
 */
 
 var offsetX = 18.9;

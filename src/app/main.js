@@ -6,5 +6,6 @@ var bounds = [
   [0, 0],
   [1000, 1000],
 ];
-var image = L.imageOverlay("assets/image/floor-pan.svg", bounds).addTo(map);
+
+var image = L.imageOverlay("assets/image/floor-plan.svg", bounds).addTo(map);
 map.fitBounds(bounds);

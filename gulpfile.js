@@ -29,7 +29,7 @@ function copyAppJs(cb) {
 }
 
 function copyAppImg(cb) {
-  return src("./src/**/image/**/*.png").pipe(dest(buildPath));
+  return src("./src/**/image/**/*.{png,gif,jpg,svg}").pipe(dest(buildPath));
 }
 
 // CLEAN TASK

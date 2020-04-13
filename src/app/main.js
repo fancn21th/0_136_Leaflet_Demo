@@ -40,11 +40,25 @@ var map = L.map("map", {
 var offsetX = 18.9;
 var offsetY = 6.4;
 
-var adjustAndConvert = (cord) => {
-  var x = parseFloat(cord[0]);
-  var y = parseFloat(cord[1]);
-  return [y + offsetY, x + offsetX];
+var yx = L.latLng;
+
+var xy = function (x, y) {
+  if (L.Util.isArray(x)) {
+    // When doing xy([x, y]);
+    return yx(x[1], x[0]);
+  }
+  return yx(y, x); // When doing xy(x, y);
 };
+
+var genXyOffset = (offsetX, offsetY) => (xyArr) => {
+  var offsetXyArr = [
+    parseFloat(xyArr[0]) + offsetX,
+    parseFloat(xyArr[1]) + offsetY,
+  ];
+  return xy(offsetXyArr);
+};
+
+var xyOffset = genXyOffset(offsetX, offsetY);
 
 var bounds = [
   [0, 0],
@@ -54,11 +68,11 @@ var bounds = [
 var image = L.imageOverlay("assets/image/floor-plan.svg", bounds).addTo(map);
 map.fitBounds(bounds);
 
-L.marker(adjustAndConvert([0, 0])).addTo(map);
+L.marker(xyOffset([0, 0])).addTo(map);
 
 data.forEach((item) => {
   var arr = item.split(",");
   var x = arr[2];
   var y = arr[3];
-  L.marker(adjustAndConvert([x, y])).addTo(map);
+  L.marker(xyOffset([x, y])).addTo(map);
 });

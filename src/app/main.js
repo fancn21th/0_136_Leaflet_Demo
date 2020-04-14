@@ -1,3 +1,46 @@
+var map = L.map("map", {
+  crs: L.CRS.Simple,
+});
+
+/*
+  浦东
+  宽109.7米 宽的偏移是 18.9
+  高147.3米 高的偏移是 6.4
+*/
+
+var offsetX = 18.9;
+var offsetY = 6.4;
+
+var yx = L.latLng;
+
+var xy = function (x, y) {
+  if (L.Util.isArray(x)) {
+    // When doing xy([x, y]);
+    return yx(x[1], x[0]);
+  }
+  return yx(y, x); // When doing xy(x, y);
+};
+
+// hoc for generating function that do the topleft bottomleft cord conversion
+var genXyOffset = (offsetX, offsetY) => (xyArr) => {
+  var offsetXyArr = [
+    parseFloat(xyArr[0]) + offsetX,
+    parseFloat(xyArr[1]) + offsetY,
+  ];
+  return xy(offsetXyArr);
+};
+
+var xyOffset = genXyOffset(offsetX, offsetY);
+
+var bounds = [
+  [0, 0],
+  [147.3, 109.7],
+];
+
+var image = L.imageOverlay("assets/image/floor-plan.svg", bounds).addTo(map);
+map.fitBounds(bounds);
+
+// markers
 var data = [
   "F,f111,78.5,39.7,0.0,0,1586527448,a88999,I",
   "F,f111,79.3,39.2,0.0,0,1586527449,a88999,I",
@@ -27,47 +70,6 @@ var data = [
   "F,f111,70.0,78.1,0.0,0,1586527478,a88999,I",
 ];
 
-var map = L.map("map", {
-  crs: L.CRS.Simple,
-});
-
-/*
-  浦东
-  宽109.7米 宽的偏移是 18.9
-  高147.3米 高的偏移是 6.4
-*/
-
-var offsetX = 18.9;
-var offsetY = 6.4;
-
-var yx = L.latLng;
-
-var xy = function (x, y) {
-  if (L.Util.isArray(x)) {
-    // When doing xy([x, y]);
-    return yx(x[1], x[0]);
-  }
-  return yx(y, x); // When doing xy(x, y);
-};
-
-var genXyOffset = (offsetX, offsetY) => (xyArr) => {
-  var offsetXyArr = [
-    parseFloat(xyArr[0]) + offsetX,
-    parseFloat(xyArr[1]) + offsetY,
-  ];
-  return xy(offsetXyArr);
-};
-
-var xyOffset = genXyOffset(offsetX, offsetY);
-
-var bounds = [
-  [0, 0],
-  [147.3, 109.7],
-];
-
-var image = L.imageOverlay("assets/image/floor-plan.svg", bounds).addTo(map);
-map.fitBounds(bounds);
-
 L.marker(xyOffset([0, 0])).addTo(map);
 
 data.forEach((item) => {
@@ -77,6 +79,7 @@ data.forEach((item) => {
   L.marker(xyOffset([x, y])).addTo(map);
 });
 
+// 调试层
 L.GridLayer.DebugCoords = L.GridLayer.extend({
   createTile: function (coords, done) {
     var tile = document.createElement("div");
@@ -96,3 +99,23 @@ L.gridLayer.debugCoords = function (opts) {
 };
 
 map.addLayer(L.gridLayer.debugCoords());
+
+// 刻度
+L.control.scale().addTo(map);
+
+// zoom level
+var ZoomViewer = L.Control.extend({
+  onAdd: function () {
+    var gauge = L.DomUtil.create("div");
+    gauge.className = "dc-map-zoom-level";
+    // gauge.style.width = "200px";
+    // gauge.style.background = "rgba(255,255,255,0.5)";
+    // gauge.style.textAlign = "left";
+    map.on("zoomstart zoom zoomend", function (ev) {
+      gauge.innerHTML = "Zoom Level: " + map.getZoom();
+    });
+    return gauge;
+  },
+});
+
+new ZoomViewer().addTo(map);

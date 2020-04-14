@@ -1,29 +1,30 @@
-# Vanilla Javascript Isolation-Test Template
+# Leaflet-based Map
 
-## Why created
+## 功能清单
 
-- KISS principle is our motto to program
-- We should give a feature test a standalone isolation-test environment
-- This is a "simple and stupid" template for vanilla js
+- 基本功能
 
-## How to use it
+  - 非地理地图
+  - 坐标转换
+  - 自定义图标
+  - 刻度
+  - 放大缩小
 
-- install
+- 交互功能
 
-  - type `npm i` or `yarn`
+  - 区域背景
+  - 自定义背景色
+  - highlight (bringToFront)
+  - 点击 zoom
+  - 自定义 custom info
+  - 自定义 legend
 
-- open command line in mac/linux/windows
+## API
 
-  - type `npm start` or `gulp`
-
-- convention
-  - put biz logic js files in `src/app` folder
-  - put custom css files in `src/assets/css` folder
-  - put vendor js files in `src/assets/js/vendor` folder
-
-## What included
-
-- gulp 4.0
-- gulp inject
-- browser-sync
-- del
+- zoom
+  - setView(center, zoom), which also sets the map center
+  - flyTo(center, zoom), like setView but with a smooth animation
+  - zoomIn() / zoomIn(delta), zooms in delta zoom levels, 1 by default
+  - zoomOut() / zoomOut(delta), zooms out delta zoom levels, 1 by default
+  - setZoomAround(fixedPoint, zoom), sets the zoom level while keeping a point fixed (what - scrollwheel zooming does)
+  - fitBounds(bounds), automatically calculates the zoom to fit a rectangular area on the map

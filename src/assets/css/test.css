@@ -14,3 +14,10 @@ div#map {
 img {
   border: 1px dashed red;
 }
+
+.dc-map-zoom-level {
+  text-align: left;
+  color: red;
+  font-size: 30px;
+  font-weight: 800;
+}

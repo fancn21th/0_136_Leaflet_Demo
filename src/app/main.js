@@ -70,14 +70,24 @@ var data = [
   "F,f111,70.0,78.1,0.0,0,1586527478,a88999,I",
 ];
 
-L.marker(xyOffset([0, 0])).addTo(map);
+var marker = L.marker(xyOffset([0, 0])).addTo(map);
+var index = 0;
 
-data.forEach((item) => {
-  var arr = item.split(",");
+setInterval(() => {
+  var arr = data[index].split(",");
   var x = arr[2];
   var y = arr[3];
-  L.marker(xyOffset([x, y])).addTo(map);
-});
+  marker.setLatLng(xyOffset([x, y]));
+  if (index < data.length - 1) index++;
+  else index = 0;
+}, 1000);
+
+// data.forEach((item) => {
+//   var arr = item.split(",");
+//   var x = arr[2];
+//   var y = arr[3];
+//   L.marker(xyOffset([x, y])).addTo(map);
+// });
 
 // 调试层
 L.GridLayer.DebugCoords = L.GridLayer.extend({

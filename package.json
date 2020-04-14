@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "publish": "surge ./build dc-iot-map.surge.sh"
   },
   "keywords": [
     "vanilla javascript isolation test template",

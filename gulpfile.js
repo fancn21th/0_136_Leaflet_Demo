@@ -2,6 +2,7 @@ const { parallel, series, src, dest, watch } = require("gulp");
 const inject = require("gulp-inject");
 const del = require("del");
 const browserSync = require("browser-sync").create();
+const babel = require("gulp-babel");
 const { buildPath, filesToWatch, filesToInject } = require("./gulpfile.config");
 
 // INJECT TASK
@@ -11,7 +12,7 @@ function index(cb) {
     read: false,
   });
   return target
-    .pipe(inject(sources, { ignorePath: "src" }))
+    .pipe(inject(sources, { ignorePath: "src", addRootSlash: false }))
     .pipe(dest(buildPath));
 }
 
@@ -25,7 +26,13 @@ function copyVendorJs(cb) {
 }
 
 function copyAppJs(cb) {
-  return src("./src/**/app/**/*.js").pipe(dest(buildPath));
+  return src("./src/**/app/**/*.js")
+    .pipe(
+      babel({
+        presets: ["@babel/preset-env"],
+      })
+    )
+    .pipe(dest(buildPath));
 }
 
 function copyAppImg(cb) {

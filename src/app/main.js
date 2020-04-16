@@ -70,7 +70,18 @@ var data = [
   "F,f111,70.0,78.1,0.0,0,1586527478,a88999,I",
 ];
 
-var marker = L.marker(xyOffset([0, 0])).addTo(map);
+var video = [
+  '<video width="300" controls>',
+  '<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">',
+  '<source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">',
+  "Your browser does not support HTML5 video.",
+  "</video>",
+].join("");
+
+var marker = L.marker(xyOffset([0, 0]))
+  .addTo(map)
+  .bindPopup(video)
+  .openPopup();
 var index = 0;
 
 setInterval(() => {

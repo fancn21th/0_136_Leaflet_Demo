@@ -80,10 +80,11 @@ var video = [
 
 var marker = L.marker(xyOffset([0, 0]))
   .addTo(map)
-  .bindPopup(video)
+  // .bindPopup(video)
   .openPopup();
 var index = 0;
 
+// 实时
 setInterval(() => {
   var arr = data[index].split(",");
   var x = arr[2];
@@ -92,6 +93,15 @@ setInterval(() => {
   if (index < data.length - 1) index++;
   else index = 0;
 }, 1000);
+
+// 轨迹
+var latlngs = data.map((item) => {
+  var arr = item.split(",");
+  var x = arr[2];
+  var y = arr[3];
+  return xyOffset([x, y]);
+});
+var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
 
 // data.forEach((item) => {
 //   var arr = item.split(",");

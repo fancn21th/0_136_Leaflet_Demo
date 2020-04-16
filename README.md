@@ -2,22 +2,31 @@
 
 ## 功能清单
 
-- 基本功能
+- 产品需求
+
+  - 自定义缩放
+  - 视频跟随
+  - 全屏查看
+  - 历史轨迹
+  - 实时位置
+  - 放大缩小
+  - 刻度尺
+
+- 开发功能
 
   - 非地理地图
   - 坐标转换
   - 自定义图标
-  - 刻度
-  - 放大缩小
 
-- 交互功能
+- 其他功能
+
+  > https://leafletjs.com/examples/choropleth/
 
   - 区域背景
-  - 自定义背景色
   - highlight (bringToFront)
-  - 点击 zoom
-  - 自定义 custom info
-  - 自定义 legend
+  - zoomToFeature
+  - Custom Info Control
+  - Custom Legend Control
 
 ## API
 

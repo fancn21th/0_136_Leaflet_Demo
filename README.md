@@ -18,6 +18,7 @@
   - 坐标转换
   - 自定义图标
   - Vector Layers
+  - tileLayer
 
 - 其他功能
 
@@ -30,6 +31,10 @@
   - Custom Legend Control
 
 ## API
+
+- locate
+
+  - locationfound event
 
 - zoom
   - setView(center, zoom), which also sets the map center

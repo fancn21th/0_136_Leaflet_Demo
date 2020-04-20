@@ -40,7 +40,7 @@ var bounds = [
 var image = L.imageOverlay("assets/image/floor-plan.svg", bounds).addTo(map);
 map.fitBounds(bounds);
 
-// markers
+// markers data
 var data = [
   "F,f111,78.5,39.7,0.0,0,1586527448,a88999,I",
   "F,f111,79.3,39.2,0.0,0,1586527449,a88999,I",
@@ -78,31 +78,34 @@ var video = [
   "</video>",
 ].join("");
 
-var marker = L.marker(xyOffset([0, 0]))
-  .addTo(map)
-  // .bindPopup(video)
-  .openPopup();
-var index = 0;
+// 标记
+// var marker = L.marker(xyOffset([0, 0]))
+//   .addTo(map)
+//   // .bindPopup(video)
+//   .openPopup();
+// var index = 0;
 
 // 实时
-setInterval(() => {
-  var arr = data[index].split(",");
-  var x = arr[2];
-  var y = arr[3];
-  marker.setLatLng(xyOffset([x, y]));
-  if (index < data.length - 1) index++;
-  else index = 0;
-}, 1000);
+// setInterval(() => {
+//   var arr = data[index].split(",");
+//   var x = arr[2];
+//   var y = arr[3];
+//   marker.setLatLng(xyOffset([x, y]));
+//   if (index < data.length - 1) index++;
+//   else index = 0;
+// }, 1000);
 
 // 轨迹
-var latlngs = data.map((item) => {
-  var arr = item.split(",");
-  var x = arr[2];
-  var y = arr[3];
-  return xyOffset([x, y]);
-});
-var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
+// polyline
+// var latlngs = data.map((item) => {
+//   var arr = item.split(",");
+//   var x = arr[2];
+//   var y = arr[3];
+//   return xyOffset([x, y]);
+// });
+// var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
 
+// markers
 // data.forEach((item) => {
 //   var arr = item.split(",");
 //   var x = arr[2];
@@ -111,25 +114,56 @@ var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
 // });
 
 // 调试层
-L.GridLayer.DebugCoords = L.GridLayer.extend({
-  createTile: function (coords, done) {
-    var tile = document.createElement("div");
-    tile.innerHTML = [coords.x, coords.y, coords.z].join(", ");
-    tile.style.outline = "1px dotted blue";
+// L.GridLayer.DebugCoords = L.GridLayer.extend({
+//   createTile: function (coords, done) {
+//     var tile = document.createElement("div");
+//     tile.innerHTML = [coords.x, coords.y, coords.z].join(", ");
+//     tile.style.outline = "1px dotted blue";
 
-    setTimeout(function () {
-      done(null, tile); // Syntax is 'done(error, tile)'
-    }, 500 + Math.random() * 1500);
+//     setTimeout(function () {
+//       done(null, tile); // Syntax is 'done(error, tile)'
+//     }, 500 + Math.random() * 1500);
 
-    return tile;
-  },
+//     return tile;
+//   },
+// });
+
+// L.gridLayer.debugCoords = function (opts) {
+//   return new L.GridLayer.DebugCoords(opts);
+// };
+
+// map.addLayer(L.gridLayer.debugCoords());
+
+// 性能测试
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+/*
+  浦东
+  宽109.7米 宽的偏移是 18.9  => 1097 - 189
+  高147.3米 高的偏移是 6.4   => 1473 - 64
+*/
+
+var bigArray = new Array(10000).fill(0);
+var maxX = 1097 - 189;
+var maxY = 1473 - 64;
+
+bigArray = bigArray.map(() => {
+  var x = getRandomInt(1, maxX) / 10;
+  var y = getRandomInt(1, maxY) / 10;
+  return [x, y];
 });
 
-L.gridLayer.debugCoords = function (opts) {
-  return new L.GridLayer.DebugCoords(opts);
-};
+console.log(bigArray);
 
-map.addLayer(L.gridLayer.debugCoords());
+bigArray.forEach((item) => {
+  var x = item[0];
+  var y = item[1];
+  L.circle(xyOffset([x, y]), { radius: 0.1 }).addTo(map);
+});
 
 // 刻度
 L.control.scale().addTo(map);

@@ -135,11 +135,11 @@ var video = [
 // map.addLayer(L.gridLayer.debugCoords());
 
 // 性能测试
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+// }
 
 /*
   浦东
@@ -147,40 +147,58 @@ function getRandomInt(min, max) {
   高147.3米 高的偏移是 6.4   => 1473 - 64
 */
 
-var bigArray = new Array(10000).fill(0);
-var maxX = 1097 - 189;
-var maxY = 1473 - 64;
+// var bigArray = new Array(10000).fill(0);
+// var maxX = 1097 - 189;
+// var maxY = 1473 - 64;
 
-bigArray = bigArray.map(() => {
-  var x = getRandomInt(1, maxX) / 10;
-  var y = getRandomInt(1, maxY) / 10;
-  return [x, y];
-});
+// bigArray = bigArray.map(() => {
+//   var x = getRandomInt(1, maxX) / 10;
+//   var y = getRandomInt(1, maxY) / 10;
+//   return [x, y];
+// });
 
-console.log(bigArray);
+// console.log(bigArray);
 
-bigArray.forEach((item) => {
-  var x = item[0];
-  var y = item[1];
-  L.circle(xyOffset([x, y]), { radius: 0.1 }).addTo(map);
-});
+// bigArray.forEach((item) => {
+//   var x = item[0];
+//   var y = item[1];
+//   L.circle(xyOffset([x, y]), { radius: 0.1 }).addTo(map);
+// });
 
 // 刻度
 L.control.scale().addTo(map);
 
 // zoom level
-var ZoomViewer = L.Control.extend({
-  onAdd: function () {
-    var gauge = L.DomUtil.create("div");
-    gauge.className = "dc-map-zoom-level";
-    // gauge.style.width = "200px";
-    // gauge.style.background = "rgba(255,255,255,0.5)";
-    // gauge.style.textAlign = "left";
-    map.on("zoomstart zoom zoomend", function (ev) {
-      gauge.innerHTML = "Zoom Level: " + map.getZoom();
-    });
-    return gauge;
-  },
-});
+// var ZoomViewer = L.Control.extend({
+//   onAdd: function () {
+//     var gauge = L.DomUtil.create("div");
+//     gauge.className = "dc-map-zoom-level";
+//     // gauge.style.width = "200px";
+//     // gauge.style.background = "rgba(255,255,255,0.5)";
+//     // gauge.style.textAlign = "left";
+//     map.on("zoomstart zoom zoomend", function (ev) {
+//       gauge.innerHTML = "Zoom Level: " + map.getZoom();
+//     });
+//     return gauge;
+//   },
+// });
 
-new ZoomViewer().addTo(map);
+// new ZoomViewer().addTo(map);
+
+// panel
+
+// var info = L.control({ position: "bottomright" });
+
+// info.onAdd = function (map) {
+//   this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
+//   this.update();
+//   return this._div;
+// };
+
+// // method that we will use to update the control based on feature properties passed
+// info.update = function () {
+//   var content = ["<button>回到中心</button>"];
+//   this._div.innerHTML = content.join("");
+// };
+
+info.addTo(map);

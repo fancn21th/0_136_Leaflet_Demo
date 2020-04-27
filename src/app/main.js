@@ -79,11 +79,11 @@ var video = [
 ].join("");
 
 // 标记
-// var marker = L.marker(xyOffset([0, 0]))
-//   .addTo(map)
-//   // .bindPopup(video)
-//   .openPopup();
-// var index = 0;
+var marker = L.marker(xyOffset([0, 0]))
+  .addTo(map)
+  // .bindPopup(video)
+  .openPopup();
+var index = 0;
 
 // 实时
 // setInterval(() => {
@@ -97,13 +97,13 @@ var video = [
 
 // 轨迹
 // polyline
-// var latlngs = data.map((item) => {
-//   var arr = item.split(",");
-//   var x = arr[2];
-//   var y = arr[3];
-//   return xyOffset([x, y]);
-// });
-// var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
+var latlngs = data.map((item) => {
+  var arr = item.split(",");
+  var x = arr[2];
+  var y = arr[3];
+  return xyOffset([x, y]);
+});
+var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
 
 // markers
 // data.forEach((item) => {
@@ -187,18 +187,18 @@ L.control.scale().addTo(map);
 
 // panel
 
-// var info = L.control({ position: "bottomright" });
+var info = L.control({ position: "bottomright" });
 
-// info.onAdd = function (map) {
-//   this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
-//   this.update();
-//   return this._div;
-// };
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
+  this.update();
+  return this._div;
+};
 
-// // method that we will use to update the control based on feature properties passed
-// info.update = function () {
-//   var content = ["<button>回到中心</button>"];
-//   this._div.innerHTML = content.join("");
-// };
+// method that we will use to update the control based on feature properties passed
+info.update = function () {
+  var content = ["<button>回到中心</button>"];
+  this._div.innerHTML = content.join("");
+};
 
 info.addTo(map);

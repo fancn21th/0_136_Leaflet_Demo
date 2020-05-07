@@ -79,10 +79,25 @@ var video = [
 ].join("");
 
 // 标记
-var marker = L.marker(xyOffset([0, 0]))
+
+var customIcon = L.icon({
+  iconUrl: "assets/image/liftover.png",
+  // shadowUrl: "leaf-shadow.png",
+  iconSize: [38, 56], // size of the icon
+  // shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 60], // point of the icon which will correspond to marker's location
+  // shadowAnchor: [4, 62], // the same for the shadow
+});
+
+var marker = L.marker(xyOffset([0, 0]), {
+  icon: customIcon,
+})
   .addTo(map)
   // .bindPopup(video)
-  .openPopup();
+  .bindTooltip("我是一个设备", {
+    permanent: true,
+    direction: "bottom",
+  });
 var index = 0;
 
 // 实时
